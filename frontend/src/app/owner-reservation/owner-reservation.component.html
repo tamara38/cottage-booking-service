@@ -1,0 +1,84 @@
+<div class="container mt-4">
+
+
+
+  <!-- PENDING REQUESTS -->
+  <div class="card shadow-sm mb-5">
+    <div class="card-header bg-warning text-dark">
+      <h4 class="mb-0">Pending Requests</h4>
+    </div>
+    <div class="card-body bg-light">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-secondary">
+            <tr>
+              <th>Cottage</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Request</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(p of pending; track p.idRes) {
+              <tr>
+                <td>{{ p.cottage_name }}</td>
+                <td>{{ p.startDate | date:'short' }}</td>
+                <td>{{ p.endDate | date:'short' }}</td>
+                <td>{{ p.request }}</td>
+                <td class="text-center">
+                  <button class="btn btn-sm btn-success me-2" (click)="acceptF(p)">Accept</button>
+                  <button class="btn btn-sm btn-danger" (click)="rejectF(p)">Reject</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESERVATION CALENDAR -->
+  <div class="card shadow-sm mb-5">
+    <div class="card-header bg-secondary text-white">
+      <h4 class="mb-0">Reservation Calendar</h4>
+    </div>
+    <div class="card-body bg-light">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div *ngIf="showDialog" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.5); z-index:1050;">
+    <div class="card shadow-sm" style="width: 500px;">
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">{{ b?.cottage_name }}</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeDialog()"></button>
+      </div>
+      <div class="card-body">
+        <p *ngIf="!showForm && !acceptbtn && !rejectbtn"><strong>Start:</strong> {{ b?.startDate | date:'short' }}</p>
+        <p *ngIf="!showForm && !acceptbtn && !rejectbtn"><strong>End:</strong> {{ b?.endDate | date:'short' }}</p>
+        <p *ngIf="!showForm && !acceptbtn && !rejectbtn"><strong>Requests:</strong> - {{ b?.request }}</p>
+        
+        <!-- Comment only for reject -->
+        <div *ngIf="(acceptbtn || rejectbtn) || showForm" class="mb-3">
+          <label for="comment"><strong>Comment:</strong></label>
+          <textarea id="comment" [(ngModel)]="rejection" (input)="clear()" class="form-control" rows="3" placeholder="Enter a comment..."></textarea>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end gap-2">
+        <!-- Accept / Reject buttons -->
+        <button *ngIf="!acceptbtn && !rejectbtn && b?.status == 'pending'" class="btn btn-success" (click)="accept()">Accept</button>
+        <button *ngIf="!acceptbtn && !rejectbtn && b?.status == 'pending'" class="btn btn-danger" (click)="reject()">Reject</button>
+
+        <!-- Cancel / Save for form -->
+        <button *ngIf="acceptbtn || rejectbtn" class="btn btn-secondary" (click)="cancel(); closeDialog()">Cancel</button>
+        <button *ngIf="acceptbtn || rejectbtn" class="btn btn-success" (click)="save()">Save</button>
+      </div>
+      <div class="text-danger px-3 pb-3">
+        {{ message }}
+      </div>
+    </div>
+  </div>
+
+</div>

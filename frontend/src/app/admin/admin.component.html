@@ -1,0 +1,24 @@
+<div class="container my-4">
+
+  <div class="card p-4 mb-4 shadow-sm" style="max-width: 400px; margin:auto;">
+    <h3 class="text-center mb-3">Admin Login</h3>
+    <table class="table table-borderless mb-2">
+      <tr>
+        <td>Username</td>
+        <td><input type="text" [(ngModel)]="u.username" class="form-control"></td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td><input type="password" [(ngModel)]="u.password" class="form-control"></td>
+      </tr>
+    </table>
+    <div class="text-center mb-2">
+      <span class="text-danger">{{message}}</span>
+    </div>
+    <div class="text-center mb-2">
+      <button (click)="login()" class="btn btn-success px-4">Login</button>
+    </div>
+    
+  </div>
+
+</div>

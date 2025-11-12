@@ -1,0 +1,115 @@
+<div class="container mt-4">
+
+  <h2 class="text-center mb-4 text-primary">My Bookings</h2>
+
+  <!-- ARCHIVED BOOKINGS -->
+  <div class="card shadow-sm mb-5">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Archived Reservations</h4>
+    </div>
+    <div class="card-body bg-light">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+          <thead class="table-secondary">
+            <tr>
+              <th>Start date</th>
+              <th>Cottage</th>
+              <th>Comment</th>
+              <th>Rating</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(a of archived; track a.idRes) {
+              <tr>
+                <td>{{ a.start | date: 'short' }}</td>
+                <td>{{ a.cottage }}</td>
+
+                <!-- Comment -->
+                <td>
+                  <div *ngIf="!a.review; else commentForm">{{ a.comment || '-' }}</div>
+                  <ng-template #commentForm>
+                    <textarea [(ngModel)]="a.comment" class="form-control" rows="2"
+                              placeholder="Leave your comment..."></textarea>
+                  </ng-template>
+                </td>
+
+                
+                <td>
+                  <div *ngIf="!a.review">
+                    <ng-container *ngFor="let i of [1,2,3,4,5]">
+                      <i class="bi"
+                         [ngClass]="i <= a.rating ? 'bi-star-fill text-warning' : 'bi-star text-muted'"></i>
+                    </ng-container>
+                  </div>
+
+                  <div *ngIf="a.review" class="d-flex justify-content-center">
+                    <ng-container *ngFor="let star of [1,2,3,4,5]">
+                      <i class="bi"
+                         [ngClass]="star <= a.rating ? 'bi-star-fill text-warning fs-4' : 'bi-star text-secondary fs-4'"
+                         style="cursor:pointer"
+                         (click)="a.rating = star"></i>
+                    </ng-container>
+                  </div>
+                </td>
+
+               
+                <td class="text-center">
+                  <button *ngIf="(a.comment == null || a.rating == 0) && !a.save && !a.review"
+                          class="btn btn-sm btn-outline-primary"
+                          (click)="review(a)">Review</button>
+
+                  <div *ngIf="a.review" class="d-flex gap-2 justify-content-center">
+                    <button class="btn btn-sm btn-secondary" (click)="cancel(a)">Cancel</button>
+                    <button class="btn btn-sm btn-success" (click)="save(a)">Save</button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+ 
+  <div class="card shadow-sm">
+    <div class="card-header bg-success text-white">
+      <h4 class="mb-0">Ongoing Reservations</h4>
+    </div>
+    <div class="card-body bg-light">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-secondary">
+            <tr>
+              <th>Start date</th>
+              <th>End date</th>
+              <th>Cottage</th>
+              <th>Location</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(o of ongoing; track o.idRes) {
+              <tr>
+                <td>{{ o.start | date: 'short' }}</td>
+                <td>{{ o.end | date: 'short' }}</td>
+                <td>{{ o.cottage }}</td>
+                <td>{{ o.location }}</td>
+                <td class="text-center">
+                  <button *ngIf="o.daysLeft >= 1"
+                          class="btn btn-sm btn-danger"
+                          (click)="cancelRes(o)">
+                    Cancel
+                  </button>
+                  <span *ngIf="o.daysLeft < 1" class="text-muted small">Cannot cancel</span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,321 @@
+<!-- TOURISTS -->
+<div class="col-12 mb-5">
+  <h4 class="text-start mb-2 text-primary">Tourists</h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered align-middle text-center">
+      <thead class="table-light">
+        <tr>
+          <th>Profile</th>
+          <th>Username</th>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Gender</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Card</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(t of tourists; track t.username) {
+        <tr>
+          <td>
+            <img [src]="t.prof_img ? 'http://localhost:8080/' + t.prof_img : t.url" 
+                 class="rounded-circle" style="width:40px; height:40px; object-fit:cover;">
+            <input *ngIf="t.editMode" type="file" #fileInput style="display:none" (change)="onFileSelected($event)">
+          </td>
+
+          <td *ngIf="!t.editMode">{{ t.username }}</td>
+          <td *ngIf="t.editMode"><input [(ngModel)]="t.username" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!t.editMode">{{ t.firstname }}</td>
+          <td *ngIf="t.editMode"><input [(ngModel)]="t.firstname" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!t.editMode">{{ t.lastname }}</td>
+          <td *ngIf="t.editMode"><input [(ngModel)]="t.lastname" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!t.editMode">{{ t.gender }}</td>
+          <td *ngIf="t.editMode"><input [(ngModel)]="t.gender" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!t.editMode">{{ t.address }}</td>
+          <td *ngIf="t.editMode"><input [(ngModel)]="t.address" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!t.editMode">{{ t.phone }}</td>
+          <td *ngIf="t.editMode"><input [(ngModel)]="t.phone" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!t.editMode">{{ t.email }}</td>
+          <td *ngIf="t.editMode"><input [(ngModel)]="t.email" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!t.editMode">{{ t.card }}</td>
+          <td *ngIf="t.editMode"><input [(ngModel)]="t.card" class="form-control form-control-sm"></td>
+
+          <td>{{ t.status }}</td>
+
+          <td class="d-flex justify-content-center gap-1 flex-wrap">
+            <button *ngIf="!t.editMode" type="button" class="btn btn-info btn-sm" (click)="edit(t)">Edit</button>
+            <button *ngIf="t.editMode" type="button" class="btn btn-success btn-sm" (click)="save(t)">Save</button>
+            <button *ngIf="t.editMode" type="button" class="btn btn-secondary btn-sm" (click)="edit(t)">Cancel</button>
+            <button *ngIf="!t.editMode" type="button" class="btn btn-danger btn-sm" (click)="delete(t)">Delete</button>
+            <button *ngIf="!t.editMode" type="button" class="btn btn-warning btn-sm" (click)="deactivate(t)">Deactivate</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- OWNERS -->
+<div class="col-12 mb-5">
+  <h4 class="text-start mb-2 text-success">Owners</h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered align-middle text-center">
+      <thead class="table-light">
+        <tr>
+          <th>Profile</th>
+          <th>Username</th>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Gender</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Card</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(o of owners; track o.username) {
+        <tr>
+          <td>
+            <img [src]="o.prof_img ? 'http://localhost:8080/' + o.prof_img : o.url" 
+                 class="rounded-circle" style="width:40px; height:40px; object-fit:cover;">
+            <input *ngIf="o.editMode" type="file" #fileInput style="display:none" (change)="onFileSelected($event)">
+          </td>
+
+          <td *ngIf="!o.editMode">{{ o.username }}</td>
+          <td *ngIf="o.editMode"><input [(ngModel)]="o.username" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!o.editMode">{{ o.firstname }}</td>
+          <td *ngIf="o.editMode"><input [(ngModel)]="o.firstname" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!o.editMode">{{ o.lastname }}</td>
+          <td *ngIf="o.editMode"><input [(ngModel)]="o.lastname" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!o.editMode">{{ o.gender }}</td>
+          <td *ngIf="o.editMode"><input [(ngModel)]="o.gender" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!o.editMode">{{ o.address }}</td>
+          <td *ngIf="o.editMode"><input [(ngModel)]="o.address" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!o.editMode">{{ o.phone }}</td>
+          <td *ngIf="o.editMode"><input [(ngModel)]="o.phone" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!o.editMode">{{ o.email }}</td>
+          <td *ngIf="o.editMode"><input [(ngModel)]="o.email" class="form-control form-control-sm"></td>
+
+          <td *ngIf="!o.editMode">{{ o.card }}</td>
+          <td *ngIf="o.editMode"><input [(ngModel)]="o.card" class="form-control form-control-sm"></td>
+
+          <td>{{ o.status }}</td>
+
+          <td class="d-flex justify-content-center gap-1 flex-wrap">
+            <button *ngIf="!o.editMode" type="button" class="btn btn-info btn-sm" (click)="edit(o)">Edit</button>
+            <button *ngIf="o.editMode" type="button" class="btn btn-success btn-sm" (click)="save(o)">Save</button>
+            <button *ngIf="o.editMode" type="button" class="btn btn-secondary btn-sm" (click)="edit(o)">Cancel</button>
+            <button *ngIf="!o.editMode" type="button" class="btn btn-danger btn-sm" (click)="delete(o)">Delete</button>
+            <button *ngIf="!o.editMode" type="button" class="btn btn-warning btn-sm" (click)="deactivate(o)">Deactivate</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <div class="col-12 text-center mb-5">
+  <button class="btn btn-success px-4" (click)="add()">Add user</button>
+</div>
+  </div>
+</div>
+
+<div class="col-12 col-md-6 mx-auto" *ngIf="addRegistration" >
+  <div class="card p-4 shadow-sm">
+    <h3 class="text-center mb-3 text-success">Add New User</h3>
+    <form >
+      <!-- Username -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Username:</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" [(ngModel)]="newUser.username" name="username">
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Password:</label>
+        <div class="col-sm-8">
+          <input type="password" class="form-control" [(ngModel)]="newUser.password" name="password" (input)="checkPassword()">
+          <small class="text-danger" *ngIf="newUser.password && !passwordValid">Use strong password!</small>
+        </div>
+      </div>
+
+      <!-- Firstname -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Firstname:</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" [(ngModel)]="newUser.firstname" name="firstname">
+        </div>
+      </div>
+
+      <!-- Lastname -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Lastname:</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" [(ngModel)]="newUser.lastname" name="lastname">
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Gender:</label>
+        <div class="col-sm-8">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" [(ngModel)]="newUser.gender" name="gender" value="M">
+            <label class="form-check-label">M</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" [(ngModel)]="newUser.gender" name="gender" value="Z">
+            <label class="form-check-label">Z</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- User type -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">User type:</label>
+        <div class="col-sm-8">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" [(ngModel)]="newUser.type" name="type" value="tourist">
+            <label class="form-check-label">Tourist</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" [(ngModel)]="newUser.type" name="type" value="owner">
+            <label class="form-check-label">Owner</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Address:</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" [(ngModel)]="newUser.address" name="address">
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Phone number:</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" [(ngModel)]="newUser.phone" name="phone">
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Email:</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" [(ngModel)]="newUser.email" name="email">
+        </div>
+      </div>
+
+      <!-- Credit Card -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Credit card:</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control d-inline-block w-auto me-2" [(ngModel)]="newUser.card" name="card" (input)="checkCard()">
+          <img [src]="dinersPath" *ngIf="newUser.card && cardType==='diners'" style="width:40px; height:25px;">
+          <img [src]="masterPath" *ngIf="newUser.card && cardType==='master'" style="width:40px; height:25px;">
+          <img [src]="visaPath" *ngIf="newUser.card && cardType==='visa'" style="width:40px; height:25px;">
+          <small class="text-danger d-block" *ngIf="newUser.card && !cardValid">Credit card number invalid</small>
+        </div>
+      </div>
+
+      <!-- Profile picture -->
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-4 col-form-label">Profile picture:</label>
+        <div class="col-sm-8">
+          <input type="file" class="form-control" (change)="onFileSelected($event)" accept=".jpg,.png">
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="text-center mt-3">
+        <button class="btn btn-success me-2" type="button" (click)="register()">Register</button>
+        <button class="btn btn-secondary" type="button" (click)="cancelReg()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- PENDING REQUESTS -->
+<div class="col-12 mb-5">
+  <h2 class="text-center mb-4 text-success">Pending Requests</h2>
+  @if(pending.length > 0){
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Profile</th>
+            <th>Username</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Card</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(p of pending; track p.username){
+          <tr>
+            <td>
+              <img [src]="p.prof_img ? 'http://localhost:8080/' + p.prof_img : p.url" 
+                   class="rounded-circle" style="width:40px; height:40px; object-fit:cover;">
+            </td>
+            <td>{{p.username}}</td>
+            <td>{{p.firstname}}</td>
+            <td>{{p.lastname}}</td>
+            <td>{{p.gender}}</td>
+            <td>{{p.address}}</td>
+            <td>{{p.phone}}</td>
+            <td>{{p.email}}</td>
+            <td>{{p.card}}</td>
+            <td>{{p.status}}</td>
+            <td class="d-flex justify-content-center gap-1 flex-wrap">
+              <button type="button" class="btn btn-outline-success btn-sm" (click)="accept(p)">Accept</button>
+              <button type="button" class="btn btn-outline-danger btn-sm" (click)="reject(p)">Reject</button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @else{
+    <p class="text-center text-muted">No pending requests.</p>
+  }
+</div>

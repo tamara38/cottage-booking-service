@@ -1,0 +1,24 @@
+<table>
+  <tr>
+    <td>Username:</td>
+    <td><input type="text" [(ngModel)]="u.username"></td>
+  </tr>
+  <tr>
+    <td>Old password:</td>
+    <td><input type="password" [(ngModel)]="u.password"></td>
+  </tr>
+  <tr>
+    <td>Re-enter old password:</td>
+    <td><input type="password" [(ngModel)]="confirmPassword" (input)="checkMatching()"></td>
+  </tr>
+  <tr *ngIf="u.password && confirmPassword && !match">Passwords not matching!</tr>
+  <tr>
+    <td>New password:</td>
+    <td><input type="password" [(ngModel)]="newPassword" (input)="checkPassword()"></td>
+  </tr>
+  <tr *ngIf="newPassword && !passwordValid">Use strong password!</tr>
+</table>
+<br>
+<button (click)="changePassword()">Change password</button>
+<br>
+{{message}}

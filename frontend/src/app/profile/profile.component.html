@@ -1,0 +1,71 @@
+<div class="container my-4">
+  <div class="card p-4 shadow-sm mx-auto" style="max-width: 700px;">
+    <h4 class="text-center mb-4">Profile</h4>
+
+    <!-- Profile picture -->
+    <div class="d-flex align-items-center mb-3">
+      <div class="me-3">
+        <img [src]="url ? url : 'http://localhost:8080/' + u.prof_img" class="img-thumbnail" style="width: 120px; height: 120px;">
+      </div>
+      <div class="d-flex flex-column">
+        <div class="mb-2">
+          <button class="btn btn-outline-primary btn-sm me-1" *ngIf="!url || removed" (click)="fileInput.click()">Edit</button>
+          <button class="btn btn-outline-secondary btn-sm me-1" *ngIf="url && !removed" (click)="cancel()">Cancel</button>
+          <button class="btn btn-success btn-sm me-1" *ngIf="url && !removed" (click)="editProfPic()">Upload</button>
+          <button class="btn btn-danger btn-sm" *ngIf="url && !removed" (click)="remove()">Remove</button>
+        </div>
+        <p class="text-success" *ngIf="url">{{messagep}}</p>
+        <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+      </div>
+    </div>
+
+    <table class="table table-borderless table-striped">
+      <tr>
+        <td>Firstname</td>
+        <td><input type="text" [(ngModel)]="u.firstname" (input)="inputfirst()" class="form-control"></td>
+        <td><button class="btn btn-outline-primary btn-sm"  (click)="editFirstname()">Edit</button></td>
+        <td><button class="btn btn-outline-secondary btn-sm me-1" *ngIf="edit" (click)="cancelel()">Cancel</button></td>
+      </tr>
+      <tr>
+        <td>Lastname</td>
+        <td><input type="text" [(ngModel)]="u.lastname" (input)="inputlast()" class="form-control"></td>
+        <td><button class="btn btn-outline-primary btn-sm"  (click)="editLastname()">Edit</button></td>
+        <td><button class="btn btn-outline-secondary btn-sm me-1" *ngIf="edit" (click)="cancelel()">Cancel</button></td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td><input type="text" [(ngModel)]="u.address" (input)="inputaddress()" class="form-control"></td>
+        <td><button class="btn btn-outline-primary btn-sm"  (click)="editAddress()">Edit</button></td>
+        <td><button class="btn btn-outline-secondary btn-sm me-1" *ngIf="edit" (click)="cancelel()">Cancel</button></td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td><input type="text" [(ngModel)]="u.email" (input)="inputemail()" class="form-control"></td>
+        <td><button class="btn btn-outline-primary btn-sm"  (click)="editEmail()">Edit</button></td>
+        <td><button class="btn btn-outline-secondary btn-sm me-1" *ngIf="edit" (click)="cancelel()">Cancel</button></td>
+      </tr>
+      <tr>
+        <td>Phone number</td>
+        <td><input type="text" [(ngModel)]="u.phone" (input)="inputphone()" class="form-control"></td>
+        <td><button class="btn btn-outline-primary btn-sm"  (click)="editPhone()">Edit</button></td>
+        <td><button class="btn btn-outline-secondary btn-sm me-1" *ngIf="edit" (click)="cancelel()">Cancel</button></td>
+      </tr>
+      <tr>
+        <td>Credit card</td>
+        <td>
+          <input type="text" [(ngModel)]="u.card" (input)="checkCard()" class="form-control mb-1">
+          <img [src]="dinersPath" *ngIf="u.card && cardType==='diners'" class="me-1" width="30">
+          <img [src]="masterPath" *ngIf="u.card && cardType==='master'" class="me-1" width="30">
+          <img [src]="visaPath" *ngIf="u.card && cardType==='visa'" class="me-1" width="30">
+        </td>
+        <td><button class="btn btn-outline-primary btn-sm" (click)="editCard()">Edit</button></td>
+        <td><button class="btn btn-outline-secondary btn-sm me-1" *ngIf="edit" (click)="cancelel()">Cancel</button></td>
+      </tr>
+      <tr *ngIf="u.card && !cardValid && edit">
+        <td colspan="2" class="text-danger">Credit card number invalid</td>
+      </tr>
+    </table>
+
+    <div class="text-center text-danger mt-2">{{message}}</div>
+  </div>
+</div>

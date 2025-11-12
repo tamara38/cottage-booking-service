@@ -1,0 +1,110 @@
+<div class="container my-4">
+
+  <!-- Login section -->
+  <div class="card p-4 mb-4 shadow-sm" style="max-width: 400px; margin:auto;">
+    <h4 class="text-center mb-3">Login</h4>
+    <table class="table table-borderless mb-2">
+      <tr>
+        <td>Username</td>
+        <td><input type="text" [(ngModel)]="u.username" class="form-control"></td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td><input type="password" [(ngModel)]="u.password" class="form-control"></td>
+      </tr>
+    </table>
+    <div class="text-center mb-2">
+      <span class="text-danger">{{message}}</span>
+    </div>
+    <div class="text-center mb-2">
+      <button (click)="login()" class="btn btn-success px-4">Login</button>
+    </div>
+    <div class="text-center">
+      <a routerLink="/register" class="me-3">Register</a>
+      <a routerLink="/changePass">Change password</a>
+    </div>
+  </div>
+
+  <!-- Stats section -->
+  <div class="card p-3 mb-4 shadow-sm bg-light">
+    <h4 class="text-center mb-3">Statistics</h4>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered text-center align-middle">
+        <thead class="table-success">
+          <tr>
+            <th>Registered</th>
+            <th>Tourists</th>
+            <th>Owners</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{registered.length}}</td>
+            <td>{{tourists.length}}</td>
+            <td>{{owners.length}}</td>
+          </tr>
+        </tbody>
+        <thead class="table-info">
+          <tr>
+            <th>Last 24 hours</th>
+            <th>Last 7 days</th>
+            <th>Last 30 days</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{last1}}</td>
+            <td>{{last7}}</td>
+            <td>{{last30}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Search form -->
+    <div class="row g-2 align-items-center mb-3 justify-content-center">
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="name" placeholder="Name" class="form-control">
+      </div>
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="location" placeholder="Location" class="form-control">
+      </div>
+      <div class="col-md-4 text-center mt-2 mt-md-0">
+        <button (click)="search()" class="btn btn-primary me-2 px-4">Search</button>
+        <button (click)="reset()" class="btn btn-outline-secondary px-4">Reset</button>
+      </div>
+    </div>
+
+  <!-- Sort buttons -->
+  <div class="text-center mb-4">
+    <button (click)="sortName()" class="btn btn-success me-2 px-4">Sort by name</button>
+    <button (click)="sortLocation()" class="btn btn-success px-4">Sort by place</button>
+  </div>
+
+  <!-- Cottages table -->
+  <div class="card p-3 shadow-sm bg-light">
+    <h4 class="text-center mb-3">Cottages</h4>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-secondary">
+          <tr>
+            <th>Name</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(c of cottages; track c.idC){
+            <tr>
+              <td class="fw-semibold">
+                {{ c.name }}
+              </td>
+              <td>{{ c.location }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

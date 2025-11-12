@@ -1,0 +1,43 @@
+<div *ngIf="bookings.length && cottages.length">
+
+    <!-- BAR CHART -->
+    <section class="mb-5">
+      <h4 class="mb-3">Bookings per Month (by Status and Cottage)</h4>
+      <ngx-charts-bar-vertical-2d
+        [results]="barChartData"
+        [view]="barChartView"
+        [legend]="true"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        xAxisLabel="Cottage / Month"
+        yAxisLabel="Number of Bookings"
+        [showGridLines]="true"
+        [animations]="true">
+      </ngx-charts-bar-vertical-2d>
+    </section>
+
+    <!-- PIE CHARTS -->
+    <section>
+      <h4 class="mb-3">Weekend vs Weekday Bookings (per Cottage)</h4>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let c of pieChartData">
+          <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column align-items-center">
+              <h5 class="card-title text-center mb-3">{{ c.name }}</h5>
+              <ngx-charts-pie-chart
+                [results]="c.series"
+                [view]="pieChartView"
+                [legend]="true"
+                [labels]="true"
+                [doughnut]="false"
+                [explodeSlices]="false"
+                [gradient]="false"
+                style="width:100%; max-width:400px;">
+              </ngx-charts-pie-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

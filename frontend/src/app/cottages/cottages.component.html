@@ -1,0 +1,60 @@
+<div class="container my-4">
+  <div class="card shadow-sm p-4">
+    <h3 class="text-center mb-4 text-success">Cottages</h3>
+
+    <!-- Search form -->
+    <div class="row g-2 align-items-center mb-3 justify-content-center">
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="name" placeholder="Name" class="form-control">
+      </div>
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="location" placeholder="Location" class="form-control">
+      </div>
+      <div class="col-md-4 text-center mt-2 mt-md-0">
+        <button (click)="search()" class="btn btn-primary me-2 px-4">Search</button>
+        <button (click)="reset()" class="btn btn-outline-secondary px-4">Reset</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(c of cottages; track c.idC){
+            <tr>
+              <td (click)="show(c)" class="fw-semibold">
+                {{ c.name }}
+                <a (click)="goDetails(c)" *ngIf="cottageId == c.idC" routerLink="/details" 
+                   class="ms-2 text-decoration-none text-primary small">
+                  Show details
+                </a>
+              </td>
+              <td>{{ c.location }}</td>
+              <td>
+                {{ c.rating }}
+                <span class="ms-2">
+                  <ng-container *ngFor="let i of [1,2,3,4,5]">
+                    <i class="bi" [ngClass]="i <= c.rating ? 'bi-star-fill text-warning' : 'bi-star text-muted'"></i>
+                  </ng-container>
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Sort buttons -->
+    <div class="text-center mt-3">
+      <button (click)="sortName()" class="btn btn-success me-2 px-4">Sort by name</button>
+      <button (click)="sortLocation()" class="btn btn-success px-4">Sort by place</button>
+    </div>
+  </div>
+</div>

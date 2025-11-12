@@ -1,0 +1,84 @@
+<div class="container my-4">
+  <div class="card p-4 shadow-sm mx-auto" style="max-width: 500px;">
+    <h4 class="text-center mb-3">Register</h4>
+
+    <table class="table table-borderless mb-2">
+      <tr>
+        <td>Username:</td>
+        <td><input type="text" [(ngModel)]="u.username" class="form-control"></td>
+      </tr>
+      <tr>
+        <td>Password:</td>
+        <td><input type="password" [(ngModel)]="u.password" (input)="checkPassword()" class="form-control"></td>
+      </tr>
+      <tr *ngIf="u.password && !passwordValid">
+        <td colspan="2" class="text-danger">Use strong password!</td>
+      </tr>
+      <tr>
+        <td>Firstname:</td>
+        <td><input type="text" [(ngModel)]="u.firstname" class="form-control"></td>
+      </tr>
+      <tr>
+        <td>Lastname:</td>
+        <td><input type="text" [(ngModel)]="u.lastname" class="form-control"></td>
+      </tr>
+      <tr>
+        <td>Gender:</td>
+        <td>
+          <div class="form-check form-check-inline">
+            <input type="radio" [(ngModel)]="u.gender" name="gender" value="M" class="form-check-input"> M
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" [(ngModel)]="u.gender" name="gender" value="Z" class="form-check-input"> Z
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>User type:</td>
+        <td>
+          <div class="form-check form-check-inline">
+            <input type="radio" [(ngModel)]="u.type" name="type" value="tourist" class="form-check-input"> Tourist
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" [(ngModel)]="u.type" name="type" value="owner" class="form-check-input"> Owner
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Address:</td>
+        <td><input type="text" [(ngModel)]="u.address" class="form-control"></td>
+      </tr>
+      <tr>
+        <td>Phone number:</td>
+        <td><input type="text" [(ngModel)]="u.phone" class="form-control"></td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td><input type="text" [(ngModel)]="u.email" class="form-control"></td>
+      </tr>
+      <tr>
+        <td>Credit card:</td>
+        <td>
+          <input type="text" [(ngModel)]="u.card" (input)="checkCard()" class="form-control mb-1">
+          <img [src]="dinersPath" *ngIf="u.card && cardType==='diners'" class="me-1" width="30">
+          <img [src]="masterPath" *ngIf="u.card && cardType==='master'" class="me-1" width="30">
+          <img [src]="visaPath" *ngIf="u.card && cardType==='visa'" class="me-1" width="30">
+        </td>
+      </tr>
+      <tr *ngIf="u.card && !cardValid">
+        <td colspan="2" class="text-danger">Credit card number invalid</td>
+      </tr>
+      <tr>
+        <td>Profile picture:</td>
+        <td><input type="file" (change)="onFileSelected($event)" accept=".jpg,.png" class="form-control"></td>
+      </tr>
+    </table>
+
+    <div class="text-center mt-3">
+      <button (click)="register()" class="btn btn-success px-4 me-2">Register</button>
+      <a routerLink="/" class="btn btn-secondary px-4">Login</a>
+    </div>
+
+    <div class="text-center mt-2 text-danger">{{message}}</div>
+  </div>
+</div>

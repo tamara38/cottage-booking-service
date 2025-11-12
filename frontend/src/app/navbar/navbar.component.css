@@ -1,0 +1,30 @@
+.custom-navbar {
+  background: linear-gradient(90deg, #a2c2e1, #b7d3c9);
+  padding: 0.7rem 1.5rem;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.nav-link {
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.2s;
+}
+
+.nav-link:hover {
+  color: #2f4858 !important;
+  transform: scale(1.05);
+}
+
+.btn-outline-light {
+  border-color: #ffffffaa;
+  color: #fff;
+  transition: 0.3s ease;
+}
+
+.btn-outline-light:hover {
+  background-color: #ffffff33;
+  border-color: #ffffff;
+}

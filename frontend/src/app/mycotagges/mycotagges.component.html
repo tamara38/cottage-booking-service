@@ -1,0 +1,210 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4 text-success">My Cottages</h2>
+
+  <div class="card shadow-sm">
+    <div class="card-body bg-light">
+      <div class="row">
+        <div class="col-12 mb-3">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle text-center w-100">
+              @for (c of cottages; track c.idC) {
+                
+                <div class="card-header bg-success text-white">
+                  <h4 class="mb-0">{{c.name}}</h4>
+                </div>
+
+                <tr>
+                  <th>Name</th>
+                  <th>Location</th>
+                  <th>X coordinate</th>
+                  <th>Y coordinate</th>
+                  <th>Phone</th>
+                  <th>Rating</th>
+                </tr>
+                
+                <tr>
+                  <td *ngIf="!c.editMode">{{ c.name }}</td>
+                  <td *ngIf="c.editMode"><input type="text" value="{{c.name}}" [(ngModel)]="c.name" class="form-control"></td>
+
+                  <td *ngIf="!c.editMode">{{ c.location }}</td>
+                  <td *ngIf="c.editMode"><input value="{{c.location}}" [(ngModel)]="c.location" class="form-control"></td>
+
+                  <td *ngIf="!c.editMode">{{ c.x }}</td>
+                  <td *ngIf="c.editMode"><input type="number" value="{{c.x}}" [(ngModel)]="c.x" class="form-control"></td>
+
+                  <td *ngIf="!c.editMode">{{ c.y }}</td>
+                  <td *ngIf="c.editMode"><input type="number" value="{{c.y}}" [(ngModel)]="c.y" class="form-control"></td>
+
+                  <td *ngIf="!c.editMode">{{ c.phone }}</td>
+                  <td *ngIf="c.editMode"><input value="{{c.phone}}" [(ngModel)]="c.phone" class="form-control"></td>
+
+                  <td>
+                  <div class="trans">
+                    {{c.rating}}
+                    <ng-container *ngFor="let i of [1,2,3,4,5]">
+                      <i class="bi"
+                         [ngClass]="i <= c.rating ? 'bi-star-fill text-warning' : 'bi-star text-muted'"></i>
+                    </ng-container>
+                  </div>
+                  
+                </td>
+                </tr>
+
+                <tr>
+                  <th>Summer</th>
+                  <th>Winter</th>
+                  <th>Holidays</th>
+                  <th>Services</th>
+                  <th>Images</th>
+                  <th>Actions</th>
+                </tr>
+
+                <tr>
+                  <td *ngIf="!c.editMode">{{ c.pricelist[0]?.price }}</td>
+                  <td *ngIf="c.editMode"><input type="number" value="{{c.pricelist[0].price}}" [(ngModel)]="c.pricelist[0].price" class="form-control" (input)="priceEdited(c,0)"></td>
+
+                  <td *ngIf="!c.editMode">{{ c.pricelist[1]?.price }}</td>
+                  <td *ngIf="c.editMode"><input type="number" value="{{c.pricelist[1].price}}" [(ngModel)]="c.pricelist[1].price" class="form-control" (input)="priceEdited(c,1)"></td>
+
+                  <td *ngIf="!c.editMode">{{ c.pricelist[2]?.price }}</td>
+                  <td *ngIf="c.editMode"><input type="number" value="{{c.pricelist[2].price}}" [(ngModel)]="c.pricelist[2].price" class="form-control" (input)="priceEdited(c,2)"></td>
+
+                  <td *ngIf="!c.editMode" class="text-start">{{ c.serviceStr }}</td>
+                  <td *ngIf="c.editMode" class="text-start">
+                    <input type="text" value="{{c.serviceStr}}" [(ngModel)]="c.serviceStr" (input)="serviceEdited()">
+                  </td>
+
+                  <td>
+                    <div class="trans">
+                    <div class="d-flex flex-wrap gap-2 justify-content-center">
+                      @for(g of c.gallery; track g) {
+                        <img [src]="'http://localhost:8080/' + g" width="80" height="80" class="rounded shadow-sm border bg-white p-1">
+                        <button *ngIf="c.editMode" class="btn btn-danger btn-sm" (click)="deleteImg(g)"><i class="bi bi-x-circle"></i></button>
+                      }
+                      
+                     
+                    </div>
+                    </div>
+                    <input *ngIf="c.editMode" type="file" (change)="onFileSelected($event)" accept=".jpg,.png" multiple>
+                   
+                </td>
+
+                  <td>
+                    <div class="d-flex flex-column align-items-center gap-2">
+    
+                        <div *ngIf="!c.editMode" class="d-flex gap-1">
+                            <button class="btn btn-primary btn-sm" (click)="edit(c)">
+                                 Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="delete(c)">
+                                 Delete
+                            </button>
+                            </div>
+
+                        <div *ngIf="c.editMode" class="d-flex gap-1 flex-wrap justify-content-center">
+                            <button class="btn btn-success btn-sm" (click)="confirm(c)">
+                            Confirm
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm" (click)="cancel(c)">
+                             Cancel
+                            </button>
+                        </div>
+                    </div>
+                  </td>
+                </tr>
+
+              }
+            </table>
+
+            <button *ngIf="!add" class="btn btn-sm btn-success me-2" (click)="addCottage()">Add cottage</button>
+            <button *ngIf="add" class="btn btn-outline-secondary" (click)="cancelAdd()">Cancel</button>
+
+          </div>
+        </div>
+<!-----------------------------------------------------------------------------------addCottage-->
+<div *ngIf="add" class="card-header bg-success text-white">
+                  <h4 class="mb-0">Add new cottage</h4>
+                </div>        
+<div class="col-12 mb-3">
+          <div class="table-responsive">
+            <table *ngIf="add" class="table table-bordered table-hover align-middle text-center w-100">
+                <tr>
+                  <th>Name</th>
+                  <th>Location</th>
+                  <th>X coordinate</th>
+                  <th>Y coordinate</th>
+                  <th>Phone</th>
+                
+                </tr>
+                
+                <tr>
+                  
+                  <td><input type="text"  [(ngModel)]="newCottage.name" class="form-control"></td>
+
+                 
+                  <td ><input type="text"  [(ngModel)]="newCottage.location" class="form-control"></td>
+
+                  
+                  <td ><input type="number"  [(ngModel)]="newCottage.x" class="form-control"></td>
+
+                  <td><input type="number"  [(ngModel)]="newCottage.y" class="form-control"></td>
+
+               
+                  <td ><input  [(ngModel)]="newCottage.phone" class="form-control"></td>
+
+                </tr>
+
+                <tr>
+                <th></th>
+                  <th>Summer</th>
+                  <th>Winter</th>
+                  <th>Holidays</th>
+                  
+                </tr>
+
+                <tr>
+                 <td><strong>Nightly rates(€)</strong></td>
+                  <td ><input type="number"  [(ngModel)]="newCottage.pricelist[0].price" class="form-control" ></td>
+
+              
+                  <td ><input type="number"  [(ngModel)]="newCottage.pricelist[1].price" class="form-control" ></td>
+
+               
+                  <td><input type="number"  [(ngModel)]="newCottage.pricelist[2].price" class="form-control" ></td>
+
+                  
+
+                  
+                    
+                  
+                </tr>
+                <tr>
+                    <th>Services (, separated)</th>
+                    <th>Upload images</th>
+                </tr>
+                <tr>
+                    <textarea [(ngModel)]="newCottage.serviceStr" class="text-start"></textarea>
+                    <td><input type="file" (change)="onFileSelected($event)" accept=".jpg,.png" multiple>
+                    
+                    </td>
+                </tr>
+                <tr>
+                    <th>Upload JSON file</th>
+                </tr>
+                <tr>
+                    <td><input type="file"  (change)="onJsonSelected($event)" accept=".json"> </td>
+                </tr>
+
+              
+            </table>
+
+            <button *ngIf="add" class="btn btn-sm btn-success me-2" (click)="insert()">Add</button>
+            <span class="text-danger">{{ message }}</span>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

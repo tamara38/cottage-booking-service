@@ -1,0 +1,171 @@
+<div class="container mt-4">
+
+  <h2 class="text-center mb-4">{{ c.name }} in {{ c.location }}</h2>
+
+  <div class="text-center mb-3">
+    <button *ngIf="!booking && !c.isBanned" class="btn btn-success px-4" (click)="bookNow()">Book now</button>
+    <div *ngIf="c.isBanned" class="text-center mt-2">
+      <span class="text-danger">Cottage banned for the next {{diffTime}} hours</span>
+    </div>
+    <button *ngIf="booking" class="btn btn-secondary px-4" (click)="cancel()">Cancel</button>
+  </div>
+
+  
+
+  <form *ngIf="booking && step == 1" class="border p-4 rounded bg-light shadow-sm">
+    <h4 class="mb-3 text-center text-primary">Step 1: Check availability and book</h4>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Start date:</label>
+      <input type="datetime-local" class="form-control" name="start"
+             [(ngModel)]="start" [min]="startMin()" (change)="startChange()">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">End date:</label>
+      <input type="datetime-local" class="form-control" name="end"
+             [(ngModel)]="end" [max]="endMax()" (change)="endChange()">
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label fw-bold">Adults:</label>
+        <input type="number" class="form-control" name="adults" [(ngModel)]="adults" (input)="adult()">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label fw-bold">Children:</label>
+        <input type="number" class="form-control" name="children" [(ngModel)]="children" (input)="child()">
+      </div>
+    </div>
+
+    <div class="text-center mt-3">
+      <button class="btn btn-primary px-4" (click)="proceed()">Proceed</button>
+    </div>
+    <div class="text-center mt-2">
+      <span class="text-danger" *ngIf="messagep != ''">{{ messagep }}</span>
+      <span class="text-danger" *ngIf="messager != ''">{{ messager }}</span>
+    </div>
+  </form>
+
+  <form *ngIf="booking && step == 2" class="border p-4 rounded bg-light shadow-sm mt-4">
+    <h4 class="mb-3 text-center text-primary">Step 2: Confirm and finish booking</h4>
+
+    <div class="mb-2"><b>Name:</b> {{ c.name }}</div>
+    <div class="mb-2"><b>Start date:</b> {{ start | date: 'short' }}</div>
+    <div class="mb-2"><b>End date:</b> {{ end | date: 'short' }}</div>
+    <div class="mb-2"><b>Adults:</b> {{ adults }}</div>
+    <div class="mb-2"><b>Children:</b> {{ children }}</div>
+    <div class="mb-2"><b>Price:</b> {{ totalAmount }} €</div>
+
+    <hr>
+
+    <div class="mb-3">
+      <b>Payment:</b><br>
+      Credit card: {{ u.card }}
+      <button *ngIf="!editCard" class="btn btn-sm btn-success" (click)="change()">Change</button>
+
+      <div *ngIf="editCard" class="mt-2 d-flex align-items-center gap-2">
+        <input type="text" class="form-control w-50" value="{{u.card}}" [(ngModel)]="u.card" (input)="checkCard()">
+        <img [src]="dinersPath" *ngIf="u.card && cardType==='diners'">
+        <img [src]="masterPath" *ngIf="u.card && cardType==='master'">
+        <img [src]="visaPath" *ngIf="u.card && cardType==='visa'">
+        <button class="btn btn-sm btn-success" disabled="{{!cardValid}}" (click)="confirm()">Confirm</button>
+        <button class="btn btn-sm btn-success" (click)="revert()">Revert</button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <textarea [(ngModel)]="b.request" name="request" class="form-control" placeholder="Enter your requests..."></textarea>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <button class="btn btn-outline-secondary px-4" (click)="back()">Back</button>
+      <button class="btn btn-primary px-4" [disabled]="message !=''" (click)="finish()">Finish booking →</button>
+    </div>
+
+    <div class="text-center mt-2">
+      <span class="text-danger">{{ message }}</span>
+    </div>
+  </form>
+
+  <hr>
+
+  <h4 class="mt-4">Gallery</h4>
+  @if(gallery.length > 0){
+    <div class="d-flex flex-wrap gap-3">
+      @for(g of gallery; track g){
+        <img [src]="'http://localhost:8080/' + g" width="200" height="200" class="rounded shadow-sm border">&nbsp;
+      }
+    </div>
+  }
+
+  <hr>
+
+  <h4>Services</h4>
+  @if(services.length > 0){
+    <table class="table table-striped table-bordered w-50">
+      @for(s of services; track s.idS){
+        <tr>
+          <td>{{ s.name }}</td>
+        </tr>
+      }
+    </table>
+  }
+
+  <hr>
+
+  <h4>Pricelist</h4>
+  @if(pricelist.length > 0){
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Period</th>
+          <th>Price per night (€)</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(p of pricelist; track p.idP){
+          <tr>
+            <td>{{ p.period }}</td>
+            <td>{{ p.price }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <hr>
+
+  <h4>Contact</h4>
+  <p><b>Phone number:</b> {{ c.phone }}</p>
+
+  <hr>
+
+  <h4>Comments</h4>
+  @if(reviews.length > 0){
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>User</th>
+          <th>Comment</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(r of reviews; track r.idR){
+          <tr>
+            <td>{{ r.user }}</td>
+            <td>{{ r.comment }}</td>
+            <td>{{ r.rating }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <hr>
+
+  <h4>Map</h4>
+  <div id="map" class="rounded shadow-sm border" style="height: 400px;"></div>
+
+</div>

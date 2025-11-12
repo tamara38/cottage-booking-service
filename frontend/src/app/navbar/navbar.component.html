@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg custom-navbar shadow-sm">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    
+    <!-- Leva strana - Back dugme -->
+    <div class="d-flex align-items-center">
+      <button class="btn btn-outline-light me-3" *ngIf="details || admindetails" (click)="back()">
+        <i class="bi bi-arrow-left"></i> Back
+      </button>
+    </div>
+
+    <!-- Sredina - Naslov -->
+    <a class="navbar-brand mx-auto text-center fw-semibold text-white" *ngIf="!details" routerLink="/">
+      <i class="bi bi-brightness-alt-high me-2"></i> Mountain Cottage
+    </a>
+
+    <!-- Desna strana - Dugmad -->
+    <div class="d-flex align-items-center">
+      <button class="navbar-toggler" *ngIf="logged" type="button" (click)="toggleNavbar()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <button class="btn btn-outline-light ms-3" *ngIf="logged" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </button>
+    </div>
+  </div>
+
+  <div [class.collapse]="isCollapsed" class="navbar-collapse mt-2">
+    <div class="navbar-nav mx-auto text-center">
+      <a class="nav-link text-white" *ngIf="(tourist || owner) && !details" routerLink="/profile">Profile</a>
+      <a class="nav-link text-white" *ngIf="tourist && !details" routerLink="/cottages">Cottages</a>
+      <a class="nav-link text-white" *ngIf="tourist && !details" routerLink="/touristReservation">Reservations</a>
+      <a class="nav-link text-white" *ngIf="owner" routerLink="/ownerReservation">Reservations</a>
+      <a class="nav-link text-white" *ngIf="owner" routerLink="/mycottages">My cottages</a>
+      <a class="nav-link text-white" *ngIf="owner" routerLink="/statistics">Statistics</a>
+      <a class="nav-link text-white" *ngIf="admin && logged && !admindetails" routerLink="/manage">Users</a>
+      <a class="nav-link text-white" *ngIf="admin && logged && !admindetails" routerLink="/admincottages">Cottages</a>
+    </div>
+  </div>
+</nav>

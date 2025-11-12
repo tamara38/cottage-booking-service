@@ -1,0 +1,32 @@
+import { Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ChangePassComponent } from './change-pass/change-pass.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AdminComponent } from './admin/admin.component';
+import { ManageComponent } from './manage/manage.component';
+import { CottagesComponent } from './cottages/cottages.component';
+import { TouristReservationComponent } from './tourist-reservation/tourist-reservation.component';
+import { OwnerReservationComponent } from './owner-reservation/owner-reservation.component';
+import { MycotaggesComponent } from './mycotagges/mycotagges.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { DetailsComponent } from './details/details.component';
+import { AdmincottagesComponent } from './admincottages/admincottages.component';
+import { AdmindetailsComponent } from './admindetails/admindetails.component';
+
+export const routes: Routes = [
+    { path: "", component: LoginComponent },
+    { path: "profile", component: ProfileComponent },
+    { path: "register", component: RegisterComponent },
+    { path: "changePass", component: ChangePassComponent },
+    { path: "admin", component: AdminComponent },
+    { path: "manage", component: ManageComponent },
+    { path: "cottages", component: CottagesComponent },
+    { path: "touristReservation", component: TouristReservationComponent },
+    { path: "ownerReservation", component: OwnerReservationComponent },
+    { path: "mycottages", component: MycotaggesComponent },
+    { path: "statistics", component: StatisticsComponent },
+    { path: "details", component: DetailsComponent },
+    { path: "admincottages", component: AdmincottagesComponent },
+    { path: "admindetails", component: AdmindetailsComponent }
+];
